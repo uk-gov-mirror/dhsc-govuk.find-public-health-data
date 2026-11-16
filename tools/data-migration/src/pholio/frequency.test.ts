@@ -25,6 +25,13 @@ it.each([
 ])('leaves unsupported or mixed prose for review: %s', (prose) =>
   expect(sourceUpdateFrequency(null, prose)).toBeNull(),
 );
+it.each([
+  'The data will normally be updated annually.',
+  'The indicator will be updated annually in the Sexual and Reproductive Health Profiles.',
+  'Annual updates',
+])('keeps the structured setting when prose is unrecognised: %s', (prose) =>
+  expect(sourceUpdateFrequency('Annual', prose)).toBe('annually'),
+);
 it('refuses a conflict between structured and prose frequency', () =>
   expect(() => sourceUpdateFrequency('Annual', 'Quarterly')).toThrow(
     'Conflicting source update frequencies',
